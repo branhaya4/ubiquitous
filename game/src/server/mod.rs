@@ -1,8 +1,8 @@
 mod fs;
 mod terminal;
 
-use fs::FileSystem;
-use terminal::Terminal;
+pub use fs::FileSystem;
+pub use terminal::Terminal;
 
 pub struct Server {
     name: String,
@@ -17,10 +17,4 @@ impl Server {
             fs: FileSystem::new()
         }
     }
-
-    pub fn open_terminal() -> Terminal {
-        todo!()
-    }
-
-    // ...
 }
