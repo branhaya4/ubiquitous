@@ -1,17 +1,13 @@
-use std::collections::LinkedList;
-
 pub struct FileSystem {
-    files: LinkedList<File>
+    files: Vec<File>
 }
 
 impl FileSystem {
     pub fn new() -> Self {
         Self {
-            files: LinkedList::new()
+            files: Vec::new()
         }
     }
-
-    // ..
 }
 
 struct File {
@@ -28,10 +24,10 @@ impl File {
     }
 
     fn get_contents(&self) -> &String {
-        todo!()
+        &self.contents // Return self contents
     }
 
     fn set_contents(&mut self, contents: String) {
-        todo!()
+        self.contents = contents;
     }
 }
