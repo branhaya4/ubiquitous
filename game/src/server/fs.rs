@@ -10,7 +10,7 @@ impl FileSystem {
     }
 }
 
-struct File {
+pub struct File {
     pub name: String,
     contents: String
 }
