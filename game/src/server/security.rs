@@ -11,7 +11,7 @@ impl ServerSecurity {
         todo!()
     }
 
-    pub fn can_comprimise_root(&self, attack: &AttackInfo) -> bool {
+    pub fn can_compromise_root(&self, attack: &AttackInfo) -> bool {
         todo!()
     }
 }
