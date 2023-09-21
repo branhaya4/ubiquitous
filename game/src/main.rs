@@ -1,7 +1,6 @@
-mod server;
-
-use server::{FileSystem,File,Server};
+use game::server::{FileSystem,File,Server};
+use game::terminal::Terminal;
 
 fn main() {
-    println!("Hello, world!");
+    Terminal::new(Vec::new()).run();
 }
