@@ -1,4 +1,4 @@
-use game::server::{FileSystem,File,Server};
+use game::server::{File, FileSystem, Server};
 use game::terminal::Terminal;
 
 fn main() {

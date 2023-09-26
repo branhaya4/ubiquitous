@@ -7,7 +7,7 @@ pub use security::{AttackInfo, ServerSecurity};
 pub struct Server {
     name: String,
     fs: FileSystem,
-    sec: ServerSecurity
+    sec: ServerSecurity,
 }
 
 impl Server {
@@ -15,7 +15,7 @@ impl Server {
         Server {
             name,
             fs: FileSystem::new(),
-            sec: ServerSecurity::new()
+            sec: ServerSecurity::new(),
         }
     }
 }

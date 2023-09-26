@@ -1,11 +1,11 @@
 pub struct ServerSecurity {
-    req_skill: [u32;4]
+    req_skill: [u32; 4],
 }
 
 impl ServerSecurity {
     pub fn new() -> Self {
         ServerSecurity {
-            req_skill:[0,0,0,0]
+            req_skill: [0, 0, 0, 0],
         }
     }
 
@@ -26,12 +26,12 @@ impl ServerSecurity {
 
 pub struct AttackInfo {
     pub kind: AttackKind,
-    pub skill: u32
+    pub skill: u32,
 }
 
 pub enum AttackKind {
     Password,
     ProtoManip,
     Impersonation,
-    Collision
+    Collision,
 }

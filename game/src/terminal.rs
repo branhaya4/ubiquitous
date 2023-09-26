@@ -1,17 +1,19 @@
 use std::io::stdin;
 
-use crate::{State, server::Server};
+use crate::{server::Server, State};
 
 pub struct Terminal {
-    state: State
+    state: State,
 }
 
 impl Terminal {
     pub fn new(servers: Vec<Server>) -> Self {
-        Terminal { state: State {
-            servers,
-            selected: 0
-        } }
+        Terminal {
+            state: State {
+                servers,
+                selected: 0,
+            },
+        }
     }
 
     pub fn run(&mut self) {
@@ -21,7 +23,7 @@ impl Terminal {
                 match command {
                     "echo" => {
                         println!("echo: {}", words.next().unwrap_or(""));
-                    },
+                    }
                     _ => {
                         println!("command not found")
                     }
