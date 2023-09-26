@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct FileSystem {
     files: Vec<File>,
 }
@@ -8,6 +9,7 @@ impl FileSystem {
     }
 }
 
+#[derive(Debug)]
 pub struct File {
     pub name: String,
     contents: String,

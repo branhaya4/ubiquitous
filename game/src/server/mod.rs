@@ -4,6 +4,7 @@ mod security;
 pub use fs::{File, FileSystem};
 pub use security::{AttackInfo, ServerSecurity};
 
+#[derive(Debug)]
 pub struct Server {
     name: String,
     fs: FileSystem,

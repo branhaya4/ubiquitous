@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct ServerSecurity {
     req_skill: [u32; 4],
     req_skill_root: [u32; 4],
