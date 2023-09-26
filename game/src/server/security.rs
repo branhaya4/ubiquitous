@@ -1,15 +1,13 @@
 pub struct ServerSecurity {
     req_skill: [u32; 4],
-    req_skill_root: [u32;4],
-    
+    req_skill_root: [u32; 4],
 }
 
 impl ServerSecurity {
     pub fn new() -> Self {
         ServerSecurity {
             req_skill: [0, 0, 0, 0],
-            req_skill_root: [0,0,0,0]
-
+            req_skill_root: [0, 0, 0, 0],
         }
     }
 
