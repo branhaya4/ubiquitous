@@ -1,11 +1,13 @@
 pub struct ServerSecurity {
     req_skill: [u32; 4],
+    req_skill_root: [u32; 4],
 }
 
 impl ServerSecurity {
     pub fn new() -> Self {
         ServerSecurity {
             req_skill: [0, 0, 0, 0],
+            req_skill_root: [0, 0, 0, 0],
         }
     }
 
@@ -20,7 +22,13 @@ impl ServerSecurity {
     }
 
     pub fn can_compromise_root(&self, attack: &AttackInfo) -> bool {
-        todo!()
+        use AttackKind::*;
+        match attack.kind {
+            Password => attack.skill >= self.req_skill_root[0],
+            ProtoManip => attack.skill >= self.req_skill_root[1],
+            Impersonation => attack.skill >= self.req_skill_root[2],
+            Collision => attack.skill >= self.req_skill_root[3],
+        }
     }
 }
 
