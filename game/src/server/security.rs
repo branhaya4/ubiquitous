@@ -5,7 +5,6 @@ pub struct ServerSecurity {
 impl ServerSecurity {
     pub fn new() -> Self {
         ServerSecurity {
-            //balls
             req_skill:[0,0,0,0]
         }
     }
