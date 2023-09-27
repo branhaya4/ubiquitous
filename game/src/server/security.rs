@@ -1,41 +1,36 @@
+pub type SkillArray = [f32; 4];
+
 #[derive(Debug)]
 pub struct ServerSecurity {
-    req_skill: [u32; 4],
-    req_skill_root: [u32; 4],
+    pub skill_req: SkillArray,
+    pub skill_req_root: SkillArray,
 }
 
 impl ServerSecurity {
-    pub fn new() -> Self {
-        ServerSecurity {
-            req_skill: [0, 0, 0, 0],
-            req_skill_root: [0, 0, 0, 0],
-        }
-    }
-
     pub fn can_compromise(&self, attack: &AttackInfo) -> bool {
         use AttackKind::*;
         match attack.kind {
-            Password => attack.skill >= self.req_skill[0],
-            ProtoManip => attack.skill >= self.req_skill[1],
-            Impersonation => attack.skill >= self.req_skill[2],
-            Collision => attack.skill >= self.req_skill[3],
+            Password => attack.skill >= self.skill_req[0],
+            ProtoManip => attack.skill >= self.skill_req[1],
+            Impersonation => attack.skill >= self.skill_req[2],
+            Collision => attack.skill >= self.skill_req[3],
         }
     }
 
     pub fn can_compromise_root(&self, attack: &AttackInfo) -> bool {
         use AttackKind::*;
         match attack.kind {
-            Password => attack.skill >= self.req_skill_root[0],
-            ProtoManip => attack.skill >= self.req_skill_root[1],
-            Impersonation => attack.skill >= self.req_skill_root[2],
-            Collision => attack.skill >= self.req_skill_root[3],
+            Password => attack.skill >= self.skill_req_root[0],
+            ProtoManip => attack.skill >= self.skill_req_root[1],
+            Impersonation => attack.skill >= self.skill_req_root[2],
+            Collision => attack.skill >= self.skill_req_root[3],
         }
     }
 }
 
 pub struct AttackInfo {
     pub kind: AttackKind,
-    pub skill: u32,
+    pub skill: f32,
 }
 
 pub enum AttackKind {

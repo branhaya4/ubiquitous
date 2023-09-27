@@ -1,6 +1,6 @@
 use std::io::stdin;
 
-use crate::{server::Server, State};
+use crate::{server::Server, State, gen::gen_sector};
 
 pub struct Terminal {
     state: State,
@@ -10,14 +10,14 @@ impl Terminal {
     pub fn new() -> Self {
         Terminal {
             state: State {
-                servers: Vec::new(),
+                sectors: vec![gen_sector(1.)],
                 selected: 0,
             },
         }
     }
 
     pub fn run(&mut self) {
-        println!("servers: {:?}", self.state.servers);
+        println!("servers: {:#?}", self.state.sectors); // testing
         // for line in stdin().lines().map(|x| x.unwrap()) {
         //     let mut words = line.split(' ');
         //     if let Some(command) = words.next() {
