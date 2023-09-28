@@ -17,19 +17,18 @@ impl Terminal {
     }
 
     pub fn run(&mut self) {
-        println!("servers: {:#?}", self.state.sectors); // testing
-                                                        // for line in stdin().lines().map(|x| x.unwrap()) {
-                                                        //     let mut words = line.split(' ');
-                                                        //     if let Some(command) = words.next() {
-                                                        //         match command {
-                                                        //             "echo" => {
-                                                        //                 println!("echo: {}", words.next().unwrap_or(""));
-                                                        //             }
-                                                        //             _ => {
-                                                        //                 println!("command not found")
-                                                        //             }
-                                                        //         }
-                                                        //     }
-                                                        // }
+        for line in stdin().lines().map(|x| x.unwrap()) {
+            let mut words = line.split(' ');
+            if let Some(command) = words.next() {
+                match command {
+                    "echo" => {
+                        println!("echo: {}", words.next().unwrap_or(""));
+                    }
+                    _ => {
+                        println!("command not found")
+                    }
+                }
+            }
+        }
     }
 }
