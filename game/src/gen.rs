@@ -70,7 +70,7 @@ fn gen_server(avg_skill: f32) -> Server {
 
     Server {
         name: "bob".to_string(),
-        fs: FileSystem::new(),
+        fs: FileSystem::default(),
         sec: ServerSecurity {
             skill_req,
             skill_req_root
