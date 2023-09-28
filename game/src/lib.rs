@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 pub mod gen;
 pub mod server;
 pub mod terminal;
