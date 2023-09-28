@@ -1,13 +1,9 @@
+#[derive(Debug, Default)]
 pub struct FileSystem {
-    files: Vec<File>,
+    files: Vec<File>
 }
 
-impl FileSystem {
-    pub fn new() -> Self {
-        Self { files: Vec::new() }
-    }
-}
-
+#[derive(Debug)]
 pub struct File {
     pub name: String,
     contents: String,

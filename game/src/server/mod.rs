@@ -1,21 +1,14 @@
 mod fs;
 mod security;
 
+use std::fmt::Display;
+
 pub use fs::{File, FileSystem};
 pub use security::{AttackInfo, ServerSecurity};
 
+#[derive(Debug)]
 pub struct Server {
-    name: String,
-    fs: FileSystem,
-    sec: ServerSecurity,
-}
-
-impl Server {
-    pub fn new(name: String) -> Self {
-        Server {
-            name,
-            fs: FileSystem::new(),
-            sec: ServerSecurity::new(),
-        }
-    }
+    pub name: String,
+    pub fs: FileSystem,
+    pub sec: ServerSecurity,
 }
