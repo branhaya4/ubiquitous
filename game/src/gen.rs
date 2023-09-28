@@ -1,29 +1,29 @@
+use std::vec;
+
 use petgraph::adj::NodeIndex;
 use rand::{thread_rng, Rng};
 
-use crate::{Sector, server::{Server, FileSystem, ServerSecurity, SecurityState}};
+use crate::{Sector, server::{Device, Server, FileSystem, ServerSecurity, SecurityState}};
 
 pub fn gen_sector(level: f32) -> Sector {
     let base_req = if level == 1. { 1. } else { level * 5. };
     let mut sector = Sector::default();
 
-    let starting_server = gen_server(base_req);
-    
+    let starting_server = gen_server(base_req, true);
+
     // build nodes
     sector.add_node(starting_server);
-    
+
     for layer in 1..=9 {
         let layer = layer as f32;
-        let layer_incr = if level == 1. { 4./10. } else { 5./10. };
-        let layer_req =  base_req + layer * layer_incr;
+        let layer_incr = if level == 1. { 4. / 10. } else { 5. / 10. };
+        let layer_req = base_req + layer * layer_incr;
         for _ in 0..5 {
-            sector.add_node(
-                gen_server(layer_req)
-            );
+            sector.add_node(gen_server(layer_req, false));
         }
     }
 
-    sector.add_node(gen_server(level * 5.));
+    sector.add_node(gen_server(level * 5., true));
 
     // build edges
     for i in 1..=5 {
@@ -64,7 +64,7 @@ pub fn gen_sector(level: f32) -> Sector {
     sector
 }
 
-fn gen_server(avg_skill: f32) -> Server {
+fn gen_server(avg_skill: f32, satellite: bool) -> Server {
     let skill_req = [0; 4].map(|_| gen_skill(avg_skill));
     let skill_req_root = [0; 4].map(|_| gen_skill(avg_skill + 0.5));
 
@@ -74,8 +74,13 @@ fn gen_server(avg_skill: f32) -> Server {
         sec: ServerSecurity {
             state: SecurityState::Secure,
             skill_req,
-            skill_req_root
-        }
+            skill_req_root,
+        },
+        devices: if satellite {
+            vec![Device::Satellite]
+        } else {
+            vec![]
+        },
     }
 }
 

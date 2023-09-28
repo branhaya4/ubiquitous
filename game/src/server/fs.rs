@@ -1,6 +1,6 @@
 #[derive(Debug, Default)]
 pub struct FileSystem {
-    files: Vec<File>
+    files: Vec<File>,
 }
 
 #[derive(Debug)]
