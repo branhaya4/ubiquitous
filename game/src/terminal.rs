@@ -37,6 +37,13 @@ impl Terminal {
                             println!("{}", device.lsname());
                         }
                     }
+                    "lsnet" => {
+                        let (area, server) = self.state.selected;
+                        let neighbors = self.state.sectors[area].neighbors(server.into());
+                        for neighbor in neighbors {
+                            println!("{}", self.state.sectors[area].node_weight(neighbor).unwrap().name);
+                        }
+                    }
                     _ => {
                         println!("command not found")
                     }
