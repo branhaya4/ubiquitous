@@ -1,6 +1,10 @@
 use std::io::stdin;
 
-use crate::{gen::gen_sector, server::{Server, File}, State};
+use crate::{
+    gen::gen_sector,
+    server::{utils, File, Server},
+    State,
+};
 
 pub struct Terminal {
     state: State,
@@ -22,26 +26,22 @@ impl Terminal {
         for line in stdin().lines().map(|x| x.unwrap()) {
             let mut words = line.split(' ');
             if let Some(command) = words.next() {
+                let (sector, server) = self.state.selected;
+                let sector = &mut self.state.sectors[sector];
                 match command {
                     "ls" => {
-                        let (area, server) = self.state.selected;
-                        let fs = &self.state.sectors[area].node_weight(server.into()).unwrap().fs;
-                        for file in &fs.files {
-                            println!("{}", file.name);
+                        for name in utils::ls(sector, server.into()) {
+                            println!("{}", name);
                         }
                     }
                     "lsdev" => {
-                        let (area, server) = self.state.selected;
-                        let devices = &self.state.sectors[area].node_weight(server.into()).unwrap().devices;
-                        for device in devices {
-                            println!("{}", device.lsname());
+                        for name in utils::lsdev(sector, server.into()) {
+                            println!("{}", name);
                         }
                     }
                     "lsnet" => {
-                        let (area, server) = self.state.selected;
-                        let neighbors = self.state.sectors[area].neighbors(server.into());
-                        for neighbor in neighbors {
-                            println!("{}", self.state.sectors[area].node_weight(neighbor).unwrap().name);
+                        for name in utils::lsnet(sector, server.into()) {
+                            println!("{}", name);
                         }
                     }
                     _ => {

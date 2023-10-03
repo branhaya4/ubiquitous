@@ -6,7 +6,7 @@ pub mod terminal;
 
 mod tests;
 
-use petgraph::{Graph, Undirected, adj::NodeIndex};
+use petgraph::{adj::NodeIndex, Graph, Undirected};
 use server::Server;
 
 pub type Sector = Graph<Server, (), Undirected>;
