@@ -3,7 +3,10 @@ use std::vec;
 use petgraph::adj::NodeIndex;
 use rand::{thread_rng, Rng};
 
-use crate::{Sector, server::{Device, Server, FileSystem, ServerSecurity, SecurityState}};
+use crate::{
+    server::{Device, FileSystem, SecurityState, Server, ServerSecurity},
+    Sector,
+};
 
 pub fn gen_sector(level: f32) -> Sector {
     let base_req = if level == 1. { 1. } else { level * 5. };
@@ -85,5 +88,5 @@ fn gen_server(avg_skill: f32, satellite: bool) -> Server {
 }
 
 fn gen_skill(avg_skill: f32) -> f32 {
-    thread_rng().gen_range((avg_skill-1.)..(avg_skill+1.))
+    thread_rng().gen_range((avg_skill - 1.)..(avg_skill + 1.))
 }
