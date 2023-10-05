@@ -1,8 +1,8 @@
-use std::io::{stdin, stdout, Write};
+use std::io::stdin;
 
 use crate::{
     gen::gen_sector,
-    server::{utils, File, Server},
+    server::{utils, AttackInfo, AttackKind, File, Server},
     State,
 };
 
@@ -16,6 +16,7 @@ impl Terminal {
             state: State {
                 sectors: vec![gen_sector(1.)],
                 selected: (0, 0),
+                skills: [1.; 4],
             },
         }
     }
@@ -23,23 +24,50 @@ impl Terminal {
     pub fn run(&mut self) {
         let fs = &mut self.state.sectors[0].node_weight_mut(0.into()).unwrap().fs;
         fs.files.push(File::new("bazinga".to_string()));
-        print!("user@{}:~$ ", self.state.sectors[0].node_weight(0.into()).unwrap().name);
-        stdout().flush().unwrap();
         for line in stdin().lines().map(|x| x.unwrap()) {
             let mut words = line.split(' ');
-            let (sector, server) = self.state.selected;
-            let sector = &mut self.state.sectors[sector];
             if let Some(command) = words.next() {
+                let (sector, server) = self.state.selected;
+                let sector = &mut self.state.sectors[sector];
                 match command {
-                    "cat" => {
-                        if let Some(name) = words.next() {
-                            if let Some(contents) = utils::cat(sector, server.into(), name) {
-                                println!("{}", contents);
-                            } else {
-                                println!("file not found");
+                    "hack" => {
+                        if let Some(kind) = words.next() {
+                            if let Some(name) = words.next() {
+                                let attack = match kind {
+                                    "pwd" | "password" | "crack" => {
+                                        Some(AttackInfo { kind: AttackKind::Password, skill: self.state.skills[0] })
+                                    }
+                                    "proto" | "protomanip" => {
+                                        Some(AttackInfo { kind: AttackKind::ProtoManip, skill: self.state.skills[1] })
+                                    }
+                                    "impersonation" | "phish" | "phishing" => {
+                                        Some(AttackInfo { kind: AttackKind::Impersonation, skill: self.state.skills[2] })
+                                    }
+                                    "collision" | "hash" | "hashing" => {
+                                        Some(AttackInfo { kind: AttackKind::Impersonation, skill: self.state.skills[3] })
+                                    }
+                                    _ => {
+                                        dbg!();
+                                        None
+                                    }
+                                };
+                                if let Some(attack) = attack {
+                                    if utils::hack(
+                                        sector,
+                                        server.into(),
+                                        attack,
+                                        name.to_string(),
+                                    ).unwrap() {
+                                        println!("hacking successful");
+                                    } else {
+                                        println!("hacking failed");
+                                    }
+                                } else {
+                                    println!("accepts kinds of attacks are password, ");
+                                }
                             }
                         } else {
-                            println!("usage: cat <file>");
+                            println!("usage: hack <kind> <server_name>");
                         }
                     }
                     "ls" => {
@@ -62,8 +90,6 @@ impl Terminal {
                     }
                 }
             }
-            print!("user@{}:~$ ", sector.node_weight(server.into()).unwrap().name);
-            stdout().flush().unwrap();
         }
     }
 }
