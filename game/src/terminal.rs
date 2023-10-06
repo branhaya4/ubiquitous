@@ -54,15 +54,15 @@ impl Terminal {
                                     }
                                 };
                                 if let Some(attack) = attack {
-                                    if utils::hack(
+                                    match utils::hack(
                                         sector,
                                         server.into(),
                                         attack,
                                         name.to_string(),
-                                    ).unwrap() {
-                                        println!("hacking successful");
-                                    } else {
-                                        println!("hacking failed");
+                                    ) {
+                                        Some(true) => println!("hacking successful"),
+                                        Some(false) => println!("hacking failed"),
+                                        None => println!("server not found")
                                     }
                                 } else {
                                     println!("accepts kinds of attacks are password, ");
