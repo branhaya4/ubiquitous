@@ -72,7 +72,7 @@ fn gen_server(avg_skill: f32, satellite: bool) -> Server {
     let skill_req_root = [0; 4].map(|_| gen_skill(avg_skill + 0.5));
 
     Server {
-        name: "bob".to_string(),
+        name: format!("bob{}", thread_rng().gen_range(0..100)),
         fs: FileSystem::default(),
         sec: ServerSecurity {
             state: SecurityState::Secure,
