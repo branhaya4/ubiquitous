@@ -51,15 +51,15 @@ impl Terminal {
                                     }
                                 };
                                 if let Some(attack) = attack {
-                                    if utils::hack(
+                                    match utils::hack(
                                         sector,
                                         server.into(),
                                         attack,
                                         name.to_string(),
-                                    ).unwrap() {
-                                        println!("Hacked the server!");
-                                    } else {
-                                        println!("Hacking attempt failed.");
+                                    ) {
+                                        Some(true) => println!("Hacked the server!"),
+                                        Some(false) => println!("Hacking attempt failed."),
+                                        None => println!("Server not found.")
                                     }
                                 } else {
                                     println!("accepts kinds of attacks are password, ");
@@ -67,6 +67,17 @@ impl Terminal {
                             }
                         } else {
                             println!("usage: hack <kind> <server_name>");
+                        }
+                    }
+                    "cat" => {
+                        if let Some(name) = words.next() {
+                            if let Some(contents) = utils::cat(sector, server.into(), name) {
+                                println!("{}", contents);
+                            } else {
+                                println!("file not found");
+                            }
+                        } else {
+                            println!("usage: cat <file>");
                         }
                     }
                     "ls" => {
