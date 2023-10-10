@@ -7,7 +7,7 @@ pub struct ServerSecurity {
     pub state: SecurityState,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum SecurityState {
     Secure,
     Compromised,

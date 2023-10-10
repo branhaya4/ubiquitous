@@ -94,8 +94,13 @@ impl Terminal {
                         }
                     }
                     "lsnet" => {
-                        for name in utils::lsnet(sector, server.into()) {
-                            println!("{}", name);
+                        for (name, state) in utils::lsnet(sector, server.into()) {
+                            let state = match state {
+                                crate::server::SecurityState::Secure => "secure",
+                                crate::server::SecurityState::Compromised => "comprimised",
+                                crate::server::SecurityState::CompromisedRoot => "comprimised (root)",
+                            };
+                            println!("{:<12} {}", name, state);
                         }
                     }
                     _ => {
