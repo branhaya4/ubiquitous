@@ -24,7 +24,10 @@ impl Terminal {
     pub fn run(&mut self) {
         let fs = &mut self.state.sectors[0].node_weight_mut(0.into()).unwrap().fs;
         fs.files.push(File::new("bazinga".to_string()));
-        print!("user@{}:~$ ", self.state.sectors[0].node_weight(0.into()).unwrap().name);
+        print!(
+            "user@{}:~$ ",
+            self.state.sectors[0].node_weight(0.into()).unwrap().name
+        );
         stdout().flush().unwrap();
         for line in stdin().lines().map(|x| x.unwrap()) {
             let mut words = line.split(' ');
@@ -36,18 +39,22 @@ impl Terminal {
                         if let Some(kind) = words.next() {
                             if let Some(name) = words.next() {
                                 let attack = match kind {
-                                    "pwd" | "password" | "crack" => {
-                                        Some(AttackInfo { kind: AttackKind::Password, skill: self.state.skills[0] })
-                                    }
-                                    "proto" | "protomanip" => {
-                                        Some(AttackInfo { kind: AttackKind::ProtoManip, skill: self.state.skills[1] })
-                                    }
-                                    "impersonation" | "phish" | "phishing" => {
-                                        Some(AttackInfo { kind: AttackKind::Impersonation, skill: self.state.skills[2] })
-                                    }
-                                    "collision" | "hash" | "hashing" => {
-                                        Some(AttackInfo { kind: AttackKind::Impersonation, skill: self.state.skills[3] })
-                                    }
+                                    "pwd" | "password" | "crack" => Some(AttackInfo {
+                                        kind: AttackKind::Password,
+                                        skill: self.state.skills[0],
+                                    }),
+                                    "proto" | "protomanip" => Some(AttackInfo {
+                                        kind: AttackKind::ProtoManip,
+                                        skill: self.state.skills[1],
+                                    }),
+                                    "impersonation" | "phish" | "phishing" => Some(AttackInfo {
+                                        kind: AttackKind::Impersonation,
+                                        skill: self.state.skills[2],
+                                    }),
+                                    "collision" | "hash" | "hashing" => Some(AttackInfo {
+                                        kind: AttackKind::Impersonation,
+                                        skill: self.state.skills[3],
+                                    }),
                                     _ => {
                                         dbg!();
                                         None
@@ -60,9 +67,9 @@ impl Terminal {
                                         attack,
                                         name.to_string(),
                                     ) {
-                                        Some(true) => println!("hacking successful"),
-                                        Some(false) => println!("hacking failed"),
-                                        None => println!("server not found")
+                                        Some(true) => println!("Hacking was a success!"),
+                                        Some(false) => println!("Hacking failed..."),
+                                        None => println!("ERROR: Server could not be not found"),
                                     }
                                 } else {
                                     println!("accepts kinds of attacks are password, ");
@@ -99,11 +106,14 @@ impl Terminal {
                         }
                     }
                     _ => {
-                        println!("command not found")
+                        println!("Command not found.")
                     }
                 }
             }
-            print!("user@{}:~$ ", sector.node_weight(server.into()).unwrap().name);
+            print!(
+                "user@{}:~$ ",
+                sector.node_weight(server.into()).unwrap().name
+            );
             stdout().flush().unwrap();
         }
     }
