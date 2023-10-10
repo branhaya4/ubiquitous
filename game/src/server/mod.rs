@@ -5,7 +5,7 @@ pub mod utils;
 
 pub use dev::Device;
 pub use fs::{File, FileSystem};
-pub use security::{AttackInfo, SecurityState, ServerSecurity};
+pub use security::{AttackInfo, AttackKind, SecurityState, ServerSecurity, SkillArray};
 use std::fmt::Display;
 
 #[derive(Debug)]
