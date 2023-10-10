@@ -97,8 +97,8 @@ impl Terminal {
                         for (name, state) in utils::lsnet(sector, server.into()) {
                             let state = match state {
                                 crate::server::SecurityState::Secure => "secure",
-                                crate::server::SecurityState::Compromised => "comprimised",
-                                crate::server::SecurityState::CompromisedRoot => "comprimised (root)",
+                                crate::server::SecurityState::Compromised => "compromised",
+                                crate::server::SecurityState::CompromisedRoot => "compromised (root)",
                             };
                             println!("{:<12} {}", name, state);
                         }
