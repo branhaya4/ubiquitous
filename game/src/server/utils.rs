@@ -47,13 +47,13 @@ pub fn lsdev(sector: &Sector, index: NodeIndex) -> Vec<String> {
     names
 }
 
-pub fn lsnet(sector: &Sector, index: NodeIndex) -> Vec<String> {
-    let mut names = vec![];
+pub fn lsnet(sector: &Sector, index: NodeIndex) -> Vec<(String, SecurityState)> {
+    let mut infos = vec![];
     for node in sector.neighbors(index) {
         let server = sector.node_weight(node).unwrap();
-        names.push(server.name.clone());
+        infos.push((server.name.clone(), server.sec.state.clone()));
     }
-    names
+    infos
 }
 
 pub fn cat(sector: &Sector, index: NodeIndex, name: &str) -> Option<String> {
