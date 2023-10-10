@@ -47,7 +47,6 @@ impl Terminal {
                                         Some(AttackInfo { kind: AttackKind::Impersonation, skill: self.state.skills[3] })
                                     }
                                     _ => {
-                                        dbg!();
                                         None
                                     }
                                 };
@@ -58,9 +57,9 @@ impl Terminal {
                                         attack,
                                         name.to_string(),
                                     ).unwrap() {
-                                        println!("hacking successful");
+                                        println!("Hacked the server!");
                                     } else {
-                                        println!("hacking failed");
+                                        println!("Hacking attempt failed.");
                                     }
                                 } else {
                                     println!("accepts kinds of attacks are password, ");
