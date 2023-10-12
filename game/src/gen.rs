@@ -1,10 +1,10 @@
-use std::vec;
+use std::{vec, string};
 
 use petgraph::adj::NodeIndex;
-use rand::{thread_rng, Rng};
+use rand::{thread_rng, Rng, seq::SliceRandom};
 
 use crate::{
-    server::{Device, FileSystem, SecurityState, Server, ServerSecurity},
+    server::{Device, FileSystem, SecurityState, Server, ServerSecurity, self},
     Sector,
 };
 
@@ -72,7 +72,7 @@ fn gen_server(avg_skill: f32, satellite: bool) -> Server {
     let skill_req_root = [0; 4].map(|_| gen_skill(avg_skill + 0.5));
 
     Server {
-        name: format!("bob{}", thread_rng().gen_range(0..100)),
+        name: format!("{} {}", gen_server_name(), thread_rng().gen_range(0..100)),
         fs: FileSystem::default(),
         sec: ServerSecurity {
             state: SecurityState::Secure,
@@ -89,4 +89,13 @@ fn gen_server(avg_skill: f32, satellite: bool) -> Server {
 
 fn gen_skill(avg_skill: f32) -> f32 {
     thread_rng().gen_range((avg_skill - 1.)..(avg_skill + 1.))
+}
+
+pub fn gen_server_name() -> &'static str {
+    let imported_server_names = include_str!("../assets/servernames.txt");
+    //assert_eq!(server_names,"<content of text file>")
+    //println!("{server_names}")
+    let server_name_list: Vec<&str> = imported_server_names.split("\n").collect();
+    let chosen_name: &str = server_name_list.choose(&mut rand::thread_rng()).unwrap();
+    chosen_name
 }
